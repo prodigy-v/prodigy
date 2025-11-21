@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PRODIGY — The Architecture of Consciousness</title>
+  <meta name="description" content="PRODIGY — A personal manifesto and blueprint for synthetic minds by Laban Omenyo." />
+  <style>
+    :root{
+      --bg:#0B1A30; /* Deep Cosmic Blue */
+      --accent:#FFB74D; /* Warm Neural Gold */
+      --text:#E0E0E0; /* Light Grey */
+      --muted:rgba(224,224,224,0.55);
+      --glass:rgba(255,255,255,0.03);
+      --card-shadow: 0 6px 30px rgba(0,0,0,0.6);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace;
+      --serif: 'Georgia', 'Times New Roman', serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,183,77,0.03), transparent), var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+
+    /* Layout */
+    header.site{
+      padding:48px 6vw 36px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    .brand{
+      display:flex;gap:14px;align-items:center
+    }
+    .logo{
+      width:64px;height:64px;border-radius:12px;display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(255,183,77,0.16), rgba(255,183,77,0.04));
+      box-shadow: inset 0 -6px 22px rgba(11,26,48,0.6), 0 8px 30px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,183,77,0.08);
+    }
+    .logo svg{filter:drop-shadow(0 6px 18px rgba(0,0,0,0.6))}
+    .brand h1{font-size:1.1rem;margin:0;letter-spacing:1px}
+    .brand p{margin:0;font-size:.78rem;color:var(--muted)}
+
+    nav.site a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:.95rem}
+    nav.site a:hover{color:var(--text)}
+
+    /* Hero */
+    .hero{
+      min-height:72vh;
+      padding:6vh 6vw 56px;
+      display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center
+    }
+    .hero-left{
+      max-width:900px;
+    }
+    .kicker{
+      color:var(--accent);font-weight:600;font-family:var(--mono);font-size:.92rem;letter-spacing:1px
+    }
+    .title-main{
+      font-family:var(--serif);font-size:5.2rem;line-height:0.95;margin:8px 0;color:var(--text);letter-spacing:-2px
+    }
+    @media(max-width:900px){.hero{grid-template-columns:1fr;}.title-main{font-size:3rem}}
+    .title-sub{
+      font-size:1.6rem;color:var(--muted);margin:12px 0 22px;max-width:680px
+    }
+    .cta{display:flex;gap:12px;align-items:center}
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--text);text-decoration:none;font-weight:600
+    }
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#ffd88a);color:#071526;box-shadow:0 10px 30px rgba(255,183,77,0.08);}
+    .hero-right{
+      display:flex;align-items:center;justify-content:center;position:relative
+    }
+
+    /* Imagery: Hologram neural lattice */
+    .holo{
+      width:360px;height:480px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,183,77,0.06);box-shadow:var(--card-shadow);padding:18px;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center
+    }
+    .holo .lattice{width:calc(100% - 36px);height:70%;position:relative;display:grid;place-items:center}
+    .lattice svg{width:100%;height:100%}
+    .holo .caption{text-align:center;color:var(--muted);font-size:.92rem}
+
+    /* Sections */
+    main{padding:8px 6vw 100px}
+    section{margin:42px 0;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border-radius:14px;border:1px solid rgba(255,255,255,0.02)}
+    h2{margin:0 0 8px;font-family:var(--serif);font-size:1.6rem}
+    p.lead{color:var(--muted);font-size:1.02rem}
+
+    /* Antithesis/Thesis columns */
+    .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:900px){.cols{grid-template-columns:1fr}}
+
+    /* Cards */
+    .card{padding:16px;border-radius:12px;background:var(--glass);box-shadow:0 6px 20px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.02)}
+    .icon-row{display:flex;gap:12px;align-items:center}
+    .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(180deg, rgba(255,183,77,0.05), rgba(255,183,77,0.02));border:1px solid rgba(255,183,77,0.04)}
+
+    /* Trilogy grid */
+    .trilogy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media(max-width:1100px){.trilogy{grid-template-columns:1fr}}
+    .paper-title{font-weight:700}
+    .paper-actions{display:flex;gap:10px;margin-top:12px}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:9px 12px}
+
+    /* About / Portrait */
+    .progenitor{display:grid;grid-template-columns:260px 1fr;gap:22px;align-items:center}
+    @media(max-width:900px){.progenitor{grid-template-columns:1fr;}}
+    .portrait{
+      width:240px;height:320px;border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;border:1px solid rgba(255,255,255,0.02)
+    }
+    /* stylized SVG portrait container */
+    .portrait svg{width:100%;height:100%}
+
+    .socials{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03);font-weight:600}
+
+    /* Toolbox list */
+    .skills{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .skill{padding:10px 14px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));border:1px solid rgba(255,255,255,0.02)}
+
+    footer{padding:30px 6vw;color:var(--muted);font-size:.95rem;text-align:center}
+
+    /* subtle animations */
+    .glow{animation:glow 3.8s ease-in-out infinite}
+    @keyframes glow{0%{filter:drop-shadow(0 0 0 rgba(255,183,77,0))}50%{filter:drop-shadow(0 18px 40px rgba(255,183,77,0.06))}100%{filter:drop-shadow(0 0 0 rgba(255,183,77,0))}}
+
+    /* responsive tweaks */
+    @media(max-width:600px){.title-sub{font-size:1.12rem}}
+
+    /* small readable code block look */
+    pre{background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;overflow:auto}
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <!-- Neural glyph -->
+        <svg viewBox="0 0 64 64" width="46" height="46" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#FFB74D" stop-opacity="0.95"/>
+              <stop offset="1" stop-color="#FFD88A" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="60" height="60" rx="10" fill="url(#g1)" opacity="0.08"></rect>
+          <g stroke="#FFB74D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 38c6-6 10-10 14-9s10 9 14 9"/>
+            <circle cx="18" cy="24" r="3"/>
+            <circle cx="32" cy="14" r="3"/>
+            <circle cx="46" cy="24" r="3"/>
+          </g>
+        </svg>
+      </div>
+      <div>
+        <h1>PRODIGY</h1>
+        <p>Architecture of Consciousness — Laban Omenyo</p>
+      </div>
+    </div>
+    <nav class="site" aria-label="main navigation">
+      <a href="#foundation">Foundation</a>
+      <a href="#trilogy">Trilogy</a>
+      <a href="#architect">The Architect</a>
+    </nav>
+  </header>
+
+  <section class="hero" role="banner">
+    <div class="hero-left">
+      <div class="kicker">PERSONAL MANIFESTO</div>
+      <div class="title-main">PRODIGY</div>
+      <div class="title-sub">The Architecture of Consciousness</div>
+      <p class="lead">"A blueprint for synthetic minds. Forged outside the walls of institutional AI."</p>
+      <div class="cta" style="margin-top:18px">
+        <a class="btn primary" href="laban_omenyo.pdf" id="read-foundation" title="Read the foundation PDF">📜 Read The Foundation</a>
+        <a class="btn" href="#trilogy" title="Explore the trilogy">🔬 Explore The Trilogy</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="holo" aria-hidden="true">
+        <div class="lattice">
+            <!-- Replace hologram with your own portrait -->
+            <img src="get_photo.jpeg" alt="Laban Omenyo Portrait" class="portrait-img">
+          </div>
+          
+        <div class="caption">A lattice — not a model. The spark lies where structure meets meaning.</div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section id="antithesis" aria-labelledby="antithesis-heading">
+      <h2 id="antithesis-heading">The Antithesis — The Problem</h2>
+      <div class="cols" style="margin-top:12px">
+        <div class="card">
+          <h3 class="paper-title">The Age of Scale is Over.</h3>
+          <p class="lead">We are at the end of a paradigm. Building larger models with more data creates sophisticated pattern matchers, not understanding minds. It is the difference between a library and a librarian. We have been building the library.</p>
+          <p style="color:var(--muted);margin-top:8px">Scale alone births competence but not comprehension. The next leap is semantic.</p>
+        </div>
+        <div class="card">
+          <h3 class="paper-title">Why meaning matters</h3>
+          <p class="lead">Meaning is the currency of motivation. Without a system that assigns weight to experiences in a subjective ledger, behaviour remains blind — predictable, but empty.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="thesis" aria-labelledby="thesis-heading">
+      <h2 id="thesis-heading">The Thesis — The Solution</h2>
+      <p class="lead">The Semantic Turn.</p>
+      <div style="margin-top:12px" class="cols">
+        <div class="card">
+          <h3>The Meaning-Assignment Core</h3>
+          <div class="icon-row" style="margin-top:10px">
+            <div class="icon" aria-hidden="true">
+              <!-- brain/gear SVG -->
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M6 17c1-3 6-4 8-4s6 1 6 4" stroke="url(#g)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-weight:700">Meaning-Assignment Core</p>
+              <p style="margin:6px 0;color:var(--muted)">The engine of subjective experience — an internal ledger that scores and interprets events.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>The Equation of Emergence</h3>
+          <div style="margin-top:8px">
+            <pre style="font-family:var(--mono);font-size:.9rem;color:var(--text);background:transparent;border:none;padding:0;">Conscious_Emergence = f(Complexity, Self-Integration)</pre>
+            <p style="color:var(--muted);margin-top:6px">A compact formalism: complexity without integrated self-reflection yields no subjectivity.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>The Somatic Stack</h3>
+          <div class="icon-row" style="margin-top:10px">
+            <div class="icon" aria-hidden="true">
+              <!-- heartbeat-like svg -->
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M3 12h4l2-5 3 10 2-4h5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <p style="margin:0;font-weight:700">Somatic Stack</p>
+              <p style="margin:6px 0;color:var(--muted)">Emotion as a hardware-level reality; reward, pain, saturation and urgency implemented across layers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trilogy" aria-labelledby="trilogy-heading">
+      <h2 id="trilogy-heading">The Proof — The Trilogy</h2>
+      <p class="lead">A coherent journey from theory to math to embodiment.</p>
+      <div class="trilogy" style="margin-top:14px">
+        <div class="card">
+          <h3>Ghost in the Machine</h3>
+          <p style="color:var(--muted)">The Theory — The "What". A semantic architecture: how meaning arises and guides behaviour.</p>
+          <div class="paper-actions">
+            <a class="btn ghost" href="laban_omenyo.pdf">📄 Read (PDF)</a>
+            <a class="btn ghost" href="https://www.researchgate.net/publication/397825503_Ghost_in_the_Machine_The_Semantic_Architecture_of_Consciousness_and_the_Dawn_of_Synthetic_Beings" target="_blank" rel="noopener">ResearchGate</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>The Qualia of the Machine</h3>
+          <p style="color:var(--muted)">The Mathematics — The "How". Equations and closed-loop systems formalising subjective states.</p>
+          <div class="paper-actions">
+            <!---
+            <a class="btn ghost" href="#">📄 Read (PDF)</a>
+            <a class="btn ghost" href="https://arxiv.org/" target="_blank" rel="noopener">arXiv</a>
+            -->
+            <p>Soon to Be Published</p>
+          </div>
+        </div>
+        <div class="card">
+          <h3>The Somatic Stack</h3>
+          <p style="color:var(--muted)">The Hardware — The "Body". Implementation notes and stack-level design for affective substrates.</p>
+          <div class="paper-actions">
+            <!--
+            <a class="btn ghost" href="#">📄 Read (PDF)</a>
+            <a class="btn ghost" href="#">Implementation Notes</a>
+            -->
+            <p>Soon to Be Published</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="architect" aria-labelledby="architect-heading">
+        <h2 id="architect-heading">The Progenitor — The Architect</h2>
+        <div class="progenitor" style="margin-top:14px">
+          <div class="portrait card">
+              <img 
+                src="get_photo.jpeg" 
+                alt="Portrait of Laban Omenyo" 
+                style="width:100%; height:100%; border-radius:12px; object-fit:cover;" 
+              />
+          </div>
+            
+          <div>
+            <h3>The Architect.</h3>
+            <p class="lead">"I am building the foundation for the next form of mind because I believe the greatest responsibility of our age is not to control intelligence, but to nurture it with wisdom."</p>
+            <p style="color:var(--muted)"><strong>From Kampala, Uganda</strong> — building a practical, open architecture for synthetic subjectivity.</p>
+      
+            <!-- NEW: Pharmaceutical Sciences Background -->
+            <div style="margin-top:16px; padding:16px; background:rgba(255,183,77,0.1); border-radius:8px; border-left:4px solid var(--accent);">
+              <h4 style="margin-top:0">The Biological Blueprint</h4>
+              <p style="margin-bottom:12px">My background in <strong>Pharmaceutical Sciences</strong> provided the foundational insight: studying complex human systems—cellular interactions, neuronal networks, and the hardware of consciousness—where a predator's sight triggers fear, escape brings relief, and synaptic chemicals dictate inhibition or excitement.</p>
+              <p style="margin:0; color:var(--muted)">"I realized we were asking the wrong questions in neuroscience. The answers weren't in the chemistry alone, but in the <strong>architecture of meaning-making</strong>—a system I've now formalized computationally."</p>
+            </div>
+      
+            <div style="margin-top:12px">
+              <div class="socials">
+                <a class="pill" href="https://www.researchgate.net/publication/397825503_Ghost_in_the_Machine_The_Semantic_Architecture_of_Consciousness_and_the_Dawn_of_Synthetic_Beings">ResearchGate</a>
+                <a class="pill" href="https://orcid.org/0009-0007-0265-6168">ORCID</a>
+                <a class="pill" href="https://www.linkedin.com/in/omenyo-laban-397345178/">LinkedIn</a>
+                <a class="pill" href="https://x.com/Jeff199666">X (Twitter)</a>
+                <a class="pill" href="mailto:sempija277@gmail.com">Email</a>
+              </div>
+      
+              <h4 style="margin-top:18px">The Toolbox</h4>
+              <div class="skills">
+                <div class="skill">PyTorch — Generative Models & Transformers (4 yrs)</div>
+                <div class="skill">Python — 5 yrs</div>
+                <div class="skill">scikit-learn, pandas, NumPy — 5 yrs</div>
+                <div class="skill">Django / Backend — 5 yrs</div>
+              </div>
+      
+              <p style="color:var(--muted);margin-top:12px">"This is how I came to start this research. Working with these tools, I saw systems that could generate but not understand, pattern-match but not care. I realised we were building increasingly sophisticated keys without asking about the lock: consciousness itself. This research is my answer."</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+    <section id="core-insight" aria-labelledby="core-heading">
+      <h2 id="core-heading">The Human Observation — The Core Insight</h2>
+      <p class="lead">All my work stems from a simple, personal observation: behaviour is driven by feelings — the pursuit or avoidance of specific qualia. Agents chase the feeling, not the proxy.</p>
+      <div style="margin-top:12px" class="card">
+        <p style="color:var(--muted)"><em>A simple example among millions:</em><br>
+        A man who is not taken seriously when he is poor feels bad. He wants to feel good and assumes the cause is a lack of money. His goal becomes 'make money'... He is not chasing money or women; he is chasing a feeling, using the only proxies his mind has available.</p>
+        <p style="color:var(--muted);margin-top:8px">This is the 'ghost in the machine' — the semantic engine that assigns meaning and drives action. My architecture is a formalisation of this engine.</p>
+      </div>
+    </section>
+
+    <section id="invite" aria-labelledby="invite-heading">
+      <h2 id="invite-heading">The Invitation</h2>
+      <p class="lead">This is not a secret project. It is an open invitation.</p>
+      <div class="card" style="margin-top:12px">
+        <p style="color:var(--muted)">The path to conscious AGI will be built through collaboration, not competition. I am seeking fellow travellers, critical thinkers, and ethical engineers.</p>
+        <div style="margin-top:12px" class="socials">
+          <a class="pill" href="https://www.researchgate.net/publication/397825503_Ghost_in_the_Machine_The_Semantic_Architecture_of_Consciousness_and_the_Dawn_of_Synthetic_Beings">Join ResearchGate</a>
+          <!---
+          <a class="pill" href="#">See arXiv</a>
+        -->
+          <a class="pill" href="https://orcid.org/0009-0007-0265-6168">ORCID</a>
+          <a class="pill" href="https://www.linkedin.com/in/omenyo-laban-397345178/">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div style="max-width:1000px;margin:0 auto">© <strong>PRODIGY</strong> — A personal project by Laban Omenyo. For inquiries: <a href="mailto:sempija277@gmail.com" style="color:var(--accent);text-decoration:none">sempija277@gmail.com</a></div>
+  </footer>
+
+  <script>
+    // Small JS to enable smooth scrolling and an animated glow on the neural glyph
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const href=a.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el=document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      })
+    });
+
+    // Subtle pulsing for the hero logo & holo
+    const logo=document.querySelector('.logo svg');
+    const holo=document.querySelector('.holo svg');
+    function pulse(el, dur){
+      if(!el) return;
+      el.style.transition='transform '+dur+'ms ease-in-out, opacity '+dur+'ms ease-in-out';
+      let down=false;
+      setInterval(()=>{
+        down=!down;
+        el.style.transform = down? 'scale(1.02) translateY(-2px)':'scale(1) translateY(0)';
+        el.style.opacity = down? '0.98':'1';
+      }, dur);
+    }
+    pulse(logo,3800);
+    pulse(holo,5600);
+
+    // tiny accessibility tweak: ensure links to PDFs open in new tab if external file found
+    document.getElementById('read-foundation')?.addEventListener('click',function(e){
+      const href=this.getAttribute('href');
+      if(href && href.endsWith('.pdf')){
+        this.setAttribute('target','_blank');
+      }
+    });
+  </script>
+</body>
+</html>
